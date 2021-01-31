@@ -2,14 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import { v4 as uuidv4 } from 'uuid';
 import ContactForm from './contactForm/ContactForm';
-import { ContactList } from './contactList/ContactList';
+import ContactList from './contactList/ContactList';
 import { Filter } from './filter/Filter';
 import { PhonebookWrapper } from './styledApp';
 import { Notification } from './notifications/Notification';
+import { connect } from 'react-redux';
+import { addContactActionCreator, deleteContactActionCreator, filterContactsActionCreater } from '../redux/actions/contactsActions'
 
 
 
-const App = () => {
+const App = ({ contacts, filter, addContactReducer, deleteContactReduser, filterContactsActionCreater }) => {
     const [state, setState] = useState({
         contacts: [
             { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
@@ -45,7 +47,9 @@ const App = () => {
     }
 
     const handleChangeFilter = (e) => {
-        setState(prevState => ({ ...prevState, filter: e.target.value }));
+        const { value } = e.target;
+        filterContactsActionCreater(value)
+        // setState(prevState => ({ ...prevState, filter: e.target.value }));
     }
 
     const getVisibleContacts = () => {
@@ -64,6 +68,7 @@ const App = () => {
             name: contactsObj.name,
             number: contactsObj.number,
         }
+
         if (!contactsObj.name.length) {
 
             getVisibleAlert('Please, enter your name')
@@ -86,14 +91,15 @@ const App = () => {
             }
 
         }
-
+        addContactReducer(state)
     }
 
     const deleteContact = (e) => {
         const contactId = e.target.dataset.id
-        setState(prevState =>
-            ({ ...prevState, contacts: prevState.contacts.filter(({ id }) => id !== contactId) })
-        )
+        // setState(prevState =>
+        //     ({ ...prevState, contacts: prevState.contacts.filter(({ id }) => id !== contactId) })
+        // )
+        deleteContactReduser(contactId)
     }
     return (
 
@@ -123,7 +129,7 @@ const App = () => {
                 classNames="filterSlide"
                 timeout={500}
                 unmountOnExit>
-                <Filter value={state.filter} onChangeFilter={handleChangeFilter} />
+                <Filter value={filter} onChangeFilter={handleChangeFilter} />
             </CSSTransition>
 
             {state.contacts.length > 0 && (<CSSTransition
@@ -140,4 +146,27 @@ const App = () => {
     )
 }
 
-export default App
+const mapStateToPerops = (state) => {
+    return {
+        contacts: state.contacts.filter(item => item.namename.toLowerCase().includes(state.filter.toLowerCase())),
+        filter: state.filter,
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addContactReducer: (data) => {
+            dispatch(addContactActionCreator(data))
+        },
+        deleteContactReduser: (data) => {
+            dispatch(deleteContactActionCreator(data))
+        },
+        filterContactReduser: (data) => {
+            dispatch(filterContactsActionCreater(data))
+        }
+    }
+}
+
+export default connect(mapStateToPerops, mapDispatchToProps)(App)
+
+

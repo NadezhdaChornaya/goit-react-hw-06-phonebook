@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from "prop-types";
 import { TransitionGroup } from 'react-transition-group';
+import { connect } from 'react-redux';
 import { Div } from './styledList';
 import transition from 'styled-transition-group';
 
@@ -21,11 +22,11 @@ const LI = transition.li.attrs({
 }
 `
 
-export const ContactList = ({ contacts, deleteContact }) => {
+const ContactList = ({ items, contacts, deleteContact }) => {
     return (
         <Div>
             <TransitionGroup component="ul" className="contactList wrapper">
-                {contacts.map(({ id, name, number }) => {
+                {items.map(({ id, name, number }) => {
                     return (
                         // <CSSTransition
                         //     key={id}
@@ -43,6 +44,14 @@ export const ContactList = ({ contacts, deleteContact }) => {
         </Div>
     )
 }
+
+const mapStateToPerops = (state) => {
+    return {
+        items: state.contacts.items,
+    }
+}
+
+export default connect(mapStateToPerops)(ContactList)
 
 ContactList.propTypes = {
     deleteContact: PropTypes.func.isRequired,

@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from "prop-types";
 import { FormWrapper } from './styledForm';
+// import { connect } from 'react-redux';
+// import { addContactActionCreator } from '../../redux/redusers/contactsReducer'
 
 
 const ContactForm = ({ addContact }) => {
@@ -11,6 +13,7 @@ const ContactForm = ({ addContact }) => {
 
     const hadlleSubmit = e => {
         e.preventDefault();
+        // addContact(state)
         addContact({ ...state })
         setState({
             name: '',
@@ -42,6 +45,7 @@ const ContactForm = ({ addContact }) => {
         </>
     )
 }
+
 
 export default ContactForm
 
