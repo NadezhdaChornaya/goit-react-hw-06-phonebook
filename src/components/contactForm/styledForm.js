@@ -37,5 +37,19 @@ margin-bottom: 20px;
        background-color:#3CB371;
        box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);}
 }
+.alertSlide-enter{
+transform: translateX(200%);
+}
+.alertSlide-enter-active{
+    transform: translateX(0);
+	transition: all 250ms linear;
+}
+.alertSlide-exit{
+    transform: translateX(0);
+}
+.alertSlide-active{
+    transform: translateX(200%);
+	transition: all 250ms linear;
+}
 
 `

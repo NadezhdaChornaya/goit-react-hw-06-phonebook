@@ -2,8 +2,10 @@ import React from 'react';
 import PropTypes from "prop-types";
 import { TransitionGroup } from 'react-transition-group';
 import { connect } from 'react-redux';
+import { CSSTransition } from 'react-transition-group';
 import { Div } from './styledList';
 import transition from 'styled-transition-group';
+import { deleteContactActionCreator } from '../../redux/actions/contactsActions';
 
 const LI = transition.li.attrs({
     mountOnEnter: true,
@@ -22,39 +24,48 @@ const LI = transition.li.attrs({
 }
 `
 
-const ContactList = ({ items, contacts, deleteContact }) => {
+const ContactList = ({ state, contacts, deleteContactActionCreator }) => {
     return (
+
         <Div>
             <TransitionGroup component="ul" className="contactList wrapper">
-                {items.map(({ id, name, number }) => {
+                {contacts.map(({ id, name, number }) => {
                     return (
-                        // <CSSTransition
-                        //     key={id}
-                        //     timeout={250}
-                        //     classNames="contactItemFade">
                         <LI key={id} timeout={250} className="itemContact">
                             {`${name}:  ${number}`}
-                            <button className="button" type="button" data-id={id} onClick={deleteContact}>Delete</button>
+                            <button className="button" type="button" data-id={id} onClick={deleteContactActionCreator}>Delete</button>
                         </LI>
-                        // </CSSTransition>
                     )
                 })}
 
             </TransitionGroup >
         </Div>
+
+
     )
 }
 
 const mapStateToPerops = (state) => {
     return {
-        items: state.contacts.items,
+        state: state.contacts.items,
+        contacts: state.contacts.items.filter(item => item.name.toLowerCase().includes(state.contacts.filter.toLowerCase())),
     }
 }
 
-export default connect(mapStateToPerops)(ContactList)
+const mapDispatchToProps = (dispatch) => {
+    return {
+
+        deleteContactActionCreator: (data) => {
+            dispatch(deleteContactActionCreator(data))
+        },
+    }
+}
+
+
+export default connect(mapStateToPerops, mapDispatchToProps)(ContactList)
 
 ContactList.propTypes = {
-    deleteContact: PropTypes.func.isRequired,
+    deleteContactActionCreator: PropTypes.func.isRequired,
     contacts: PropTypes.arrayOf(PropTypes.shape({
         id: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,

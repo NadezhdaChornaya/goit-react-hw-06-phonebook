@@ -1,19 +1,38 @@
 import React from 'react'
 import PropTypes from "prop-types";
 import { FilterWrapper } from './styledFilter'
+import { filterContactsActionCreater } from '../../redux/actions/contactsActions';
+import { connect } from 'react-redux';
 
-export const Filter = ({ value, onChangeFilter }) => {
+const Filter = ({ filter, filterContactsActionCreater }) => {
     return (
 
         <FilterWrapper className="wrapper">
             <h3 className="titleFilter">Find contacts by name</h3>
-            <input name="filter" type="text" className="input" placeholder="Search..." value={value} onChange={onChangeFilter}></input>
+            <input name="filter" type="text" className="input" placeholder="Search..." value={filter} onChange={filterContactsActionCreater}></input>
         </FilterWrapper>
     )
 }
 
+const mapStateToProps = (state) => {
+    return {
+        filter: state.contacts.filter
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+
+        filterContactsActionCreater: (data) => {
+            dispatch(filterContactsActionCreater(data))
+        },
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Filter)
+
 Filter.propTypes = {
-    onChangeFilter: PropTypes.func.isRequired,
+    filterContactsActionCreater: PropTypes.func.isRequired,
     contacts: PropTypes.arrayOf(PropTypes.shape({
         id: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
