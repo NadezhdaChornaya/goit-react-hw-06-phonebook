@@ -6,12 +6,8 @@ import Filter from './filter/Filter';
 import { PhonebookWrapper } from './styledApp';
 import { connect } from 'react-redux';
 
-
-
-
 const App = ({ contacts }) => {
     return (
-
         <PhonebookWrapper>
             <CSSTransition
                 in={true}
@@ -24,7 +20,6 @@ const App = ({ contacts }) => {
             </CSSTransition>
             <ContactForm />
             <h2 className="title">Contacts</h2>
-
             <CSSTransition
                 in={contacts.length > 1}
                 classNames="filterSlide"
@@ -32,7 +27,6 @@ const App = ({ contacts }) => {
                 unmountOnExit>
                 <Filter />
             </CSSTransition>
-
             {contacts.length > 0 && (<CSSTransition
                 in={true}
                 appear={true}
@@ -42,7 +36,6 @@ const App = ({ contacts }) => {
                 <ContactList contacts={contacts} />
             </CSSTransition>)}
         </PhonebookWrapper >
-
     )
 }
 

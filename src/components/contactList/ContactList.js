@@ -45,6 +45,7 @@ const ContactList = ({ contacts, deleteContactActionCreator }) => {
 }
 
 const mapStateToPerops = (state) => {
+    console.log(state)
     return {
         contacts: state.contacts.items.filter(item => item.name.toLowerCase().includes(state.contacts.filter.toLowerCase())),
     }
