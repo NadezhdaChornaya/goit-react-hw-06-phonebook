@@ -4,7 +4,7 @@ import { FilterWrapper } from './styledFilter'
 import { filterContactsActionCreater } from '../../redux/actions/contactsActions';
 import { connect } from 'react-redux';
 
-const Filter = ({ filter, filterContactsActionCreater }) => {
+const Filter = ({ state, filter, filterContactsActionCreater }) => {
     return (
 
         <FilterWrapper className="wrapper">
@@ -16,6 +16,7 @@ const Filter = ({ filter, filterContactsActionCreater }) => {
 
 const mapStateToProps = (state) => {
     return {
+        state: state.contacts.items,
         filter: state.contacts.filter
     }
 }

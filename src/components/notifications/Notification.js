@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from "prop-types";
 import { AlertWrapper } from './styledNotification';
-import { connect } from 'react-redux';
 
 const Notification = ({ text }) => {
     return (
@@ -10,9 +9,6 @@ const Notification = ({ text }) => {
         </AlertWrapper>
     )
 }
-
-
-
 
 export default Notification
 

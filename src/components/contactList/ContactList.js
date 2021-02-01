@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from "prop-types";
 import { TransitionGroup } from 'react-transition-group';
 import { connect } from 'react-redux';
-import { CSSTransition } from 'react-transition-group';
 import { Div } from './styledList';
 import transition from 'styled-transition-group';
 import { deleteContactActionCreator } from '../../redux/actions/contactsActions';
@@ -24,7 +23,7 @@ const LI = transition.li.attrs({
 }
 `
 
-const ContactList = ({ state, contacts, deleteContactActionCreator }) => {
+const ContactList = ({ contacts, deleteContactActionCreator }) => {
     return (
 
         <Div>
@@ -47,7 +46,6 @@ const ContactList = ({ state, contacts, deleteContactActionCreator }) => {
 
 const mapStateToPerops = (state) => {
     return {
-        state: state.contacts.items,
         contacts: state.contacts.items.filter(item => item.name.toLowerCase().includes(state.contacts.filter.toLowerCase())),
     }
 }
