@@ -9,7 +9,7 @@ const Filter = ({ state, filter, filterContactsActionCreater }) => {
 
         <FilterWrapper className="wrapper">
             <h3 className="titleFilter">Find contacts by name</h3>
-            <input name="filter" type="text" className="input" placeholder="Search..." value={filter} onChange={filterContactsActionCreater}></input>
+            <input name="filter" type="text" className="input" placeholder="Search..." value={filter} onChange={filterContactsActionCreater} />
         </FilterWrapper>
     )
 }
